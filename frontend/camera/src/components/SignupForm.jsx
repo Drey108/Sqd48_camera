@@ -9,7 +9,7 @@ function SignupForm() {
     email: '',
     password: ''
   });
-  const [error, setError] = useState(''); // State to hold error message
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,16 +18,15 @@ function SignupForm() {
       ...formData,
       [name]: value
     });
-    setError(''); // Clear error message on input change
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/users', formData);
+      const response = await axios.post('http://localhost:3001/users', formData, { withCredentials: true });
       console.log(response.data);
-      document.cookie = `username=${formData.username}; path=/`;
-      navigate('/');
+      navigate('/login');
       setFormData({
         username: '',
         email: '',
@@ -38,6 +37,7 @@ function SignupForm() {
         setError('User already exists');
       } else {
         console.error('Error submitting form:', error.response?.data?.error || error.message);
+        setError('Failed to add user');
       }
     }
   };
@@ -46,7 +46,7 @@ function SignupForm() {
     <div className="signup-form-container">
       <div className="signup-form">
         <h2>Sign Up</h2>
-        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
+        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username">Username:</label>

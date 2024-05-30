@@ -5,15 +5,46 @@ import axios from 'axios';
 
 const Sell = () => {
   const [sellItems, setSellItems] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+ 
+  const [dropdownOpen, setDropdownOpen] = useState();
 
+  const [flag,setFlag]=useState(false)
+  
   useEffect(() => {
     fetchSellCameras();
+    dropdownmenu()
   }, []);
 
-  const fetchSellCameras = async () => {
+const dropdownmenu = async(value) =>{
+  const response = await axios.get('http://localhost:3001/sell-cameras', { params: { username } });
+  setDropdownOpen(response.data)
+  if(flag){
+      let x=response.data.filter((elem)=>{
+           return elem.created_by==value
+      })
+      setSellItems(x)
+  }
+
+  setFlag(true)
+
+} 
+
+  const getUsernameFromCookie = () => {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith('username=')) {
+        return cookie.substring('username='.length);
+      }
+    }
+    return null;
+  };
+
+  const username = getUsernameFromCookie();
+
+  const fetchSellCameras = async (username) => {
     try {
-      const response = await axios.get('http://localhost:3001/sell-cameras');
+      const response = await axios.get('http://localhost:3001/sell-cameras', { params: { username } });
       if (response.status !== 200) {
         throw new Error('Failed to fetch sell cameras');
       }
@@ -40,7 +71,6 @@ const Sell = () => {
   const handleUpdate = async (cameraId, updatedData) => {
     try {
       const response = await axios.put(`http://localhost:3001/sell-cameras/${cameraId}`, updatedData);
-
       if (response.status === 200) {
         console.log('Camera updated successfully');
         fetchSellCameras();
@@ -56,11 +86,6 @@ const Sell = () => {
     handleUpdate(cameraId, updatedData);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  // Update Form Component
   const UpdateForm = ({ camera, handleUpdateSubmit }) => {
     const [updatedData, setUpdatedData] = useState({ name: camera.name, price: camera.price, imgurl: camera.imgurl });
 
@@ -88,7 +113,7 @@ const Sell = () => {
           </div>
           <div className="camera-buttons">
             <button type="submit">Update</button>
-            <button onClick={() => handleRemove(camera._id)}>Remove</button>
+            <button type="button" onClick={() => handleRemove(camera._id)}>Remove</button>
           </div>
         </form>
       </div>
@@ -98,9 +123,9 @@ const Sell = () => {
   return (
     <div className="sell-page">
       <div className="header">
-        <div className="logo"> 
+        <div className="logo">
           <Link to="/" className="logo-btn">
-          <h1>Cloto</h1>
+            <h1>Cloto</h1>
           </Link>
         </div>
         <nav className="navbar">
@@ -110,16 +135,18 @@ const Sell = () => {
                 Add
               </Link>
             </li>
-            <li className="dropdown">
-              <button onClick={toggleDropdown} className="dropbtn">
-                Menu
-              </button>
-              {dropdownOpen && (
-                <div className="dropdown-content">
-                </div>
-              )}
-            </li>
           </ul>
+          <div>
+            <select name="select" id="select" onChange={(e)=>{
+              dropdownmenu(e.target.value)
+            }}>
+             {
+                dropdownOpen && dropdownOpen.map((elem)=>{
+                    return <option>{elem.created_by}</option>
+                })
+             }
+            </select>
+          </div>
         </nav>
       </div>
 

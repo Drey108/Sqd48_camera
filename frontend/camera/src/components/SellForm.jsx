@@ -1,9 +1,7 @@
-// SellForm.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './SellForm.css'; // Import sellform.css file
+import './SellForm.css';
 
 const SellForm = () => {
   const [price, setPrice] = useState('');
@@ -11,32 +9,28 @@ const SellForm = () => {
   const [imageUrl, setImageUrl] = useState('');
   const navigate = useNavigate();
 
+  // Function to get the value of the 'username' cookie
+  function getUsernameFromCookie() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith('username=')) {
+        return cookie.substring('username='.length);
+      }
+    }
+    return null;
+  }
+
+  const username = getUsernameFromCookie();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Function to get the value of the 'username' cookie
-function getUsernameFromCookie() {
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    // Check if this cookie is the 'username' cookie
-    if (cookie.startsWith('username=')) {
-      // Return the value of the 'username' cookie
-      return cookie.substring('username='.length);
-    }
-  }
-  // Return null if the 'username' cookie is not found
-  return null;
-}
-
-// Usage example
-const username = getUsernameFromCookie();
-
     try {
       const formData = {
         name: modelName,
         imgurl: imageUrl,
         price: parseFloat(price),
-        
+        created_by:username, // Include username in the form data
       };
 
       const response = await axios.post('http://localhost:3001/sell-cameras', formData);
@@ -56,9 +50,9 @@ const username = getUsernameFromCookie();
   };
 
   return (
-    <div className="sell-form-container"> {/* Make sure to use a container class name */}
+    <div className="sell-form-container">
       <h2>Sell Your Camera</h2>
-      <form onSubmit={handleSubmit} className="sell-form"> {/* Apply CSS class to form */}
+      <form onSubmit={handleSubmit} className="sell-form">
         <div>
           <label htmlFor="price">Price:</label>
           <input

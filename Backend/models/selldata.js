@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const sellItemSchema = new mongoose.Schema({
   name: String,
   imgurl: String,
-  price: Number
-  
+  price: Number,
+  created_by: { type: String, required: true } 
 });
 
 // Create a model based on the schema, specifying the collection name

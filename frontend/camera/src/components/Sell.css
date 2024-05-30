@@ -1,4 +1,3 @@
-/* Sell.css */
 .sell-page {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -108,7 +107,7 @@ footer {
   margin-right: 10px;
 }
 
-.logo-btn{
+.logo-btn {
   background-color: #33333300;
   color: #ffffff;
   border: none;
@@ -116,191 +115,17 @@ footer {
 }
 
 .add-btn {
-  background-color: #333; 
-  color: white; 
-  border: none;
-  padding: 8px 16px; 
-  border-radius: 4px; 
-  cursor: pointer;
-  text-decoration: none; 
-}
-
-
-.add-btn:hover {
-  background-color: #3e8e41; 
-}
-
-/* Dropdown Menu Styles */
-.navbar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.navbar li {
-  margin-right: 10px;
-}
-
-.dropbtn {
   background-color: #333;
   color: white;
-  padding: 8px 16px;
   border: none;
-  cursor: pointer;
+  padding: 8px 16px;
   border-radius: 4px;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 20px;
-  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 6px 8px;
+  cursor: pointer;
   text-decoration: none;
-  display: block;
 }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
+.add-btn:hover {
   background-color: #3e8e41;
-}
-/* Sell.css */
-.sell-page {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-.header {
-  background-color: #333;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-}
-
-.logo {
-  margin-right: 20px;
-}
-
-.content {
-  padding: 20px;
-  text-align: center;
-}
-
-.content button {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
-
-/* Additional styles for grid layout */
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px;
-}
-
-.column {
-  flex: 0 0 calc(33.333% - 30px);
-  max-width: calc(33.333% - 30px);
-  margin: 0 15px 30px;
-}
-
-@media (max-width: 768px) {
-  .column {
-    flex: 0 0 calc(50% - 30px);
-    max-width: calc(50% - 30px);
-  }
-}
-
-@media (max-width: 576px) {
-  .column {
-    flex: 0 0 calc(100% - 30px);
-    max-width: calc(100% - 30px);
-  }
-}
-
-.camera-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.camera-item img {
-  width: 500px;
-  height: 500px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.camera-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.camera-details-text {
-  display: flex;
-  align-items: center;
-}
-
-.camera-details-text p {
-  margin: 0;
-}
-
-.camera-buttons {
-  margin-top: 10px;
-}
-
-.camera-buttons button {
-  margin-right: 10px;
-}
-
-.add-btn {
-  background-color: #ffffff;
-  color: black;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 /* Dropdown Menu Styles */
