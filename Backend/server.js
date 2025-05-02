@@ -1,16 +1,17 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const routes = require('./routes');
+
 const app = express();
 const port = process.env.PORT || 3001;
-const mongoose = require('mongoose');
-const routes = require("./routes");
-const cors = require('cors');
-const cookieParser = require("cookie-parser");
 
-// Configure CORS
+// ✅ CORS Configuration for Render deployment and local dev
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://camerafrontend.pages.dev/'  // ✅ Replace with your actual frontend URL
+  'http://localhost:5173', // Local frontend (Vite)
+  'https://sqd48-camera.onrender.com/' // 🔁 Replace with your actual frontend URL on Render
 ];
 
 const corsOptions = {
@@ -24,35 +25,32 @@ const corsOptions = {
   credentials: true
 };
 
+// ✅ Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.get('/', (req, res) => {
-  res.send('Backend is working');
+
+// ✅ Routes
+app.use('/', routes);
+
+// ✅ MongoDB connection
+mongoose.connect(process.env.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch((err) => console.error('❌ MongoDB connection error:', err));
+
+// ✅ DB connection test endpoint
+app.get('/mongodbconnection', (req, res) => {
+  const isConnected = mongoose.connection.readyState === 1;
+  res.send(isConnected ? 'Connected to DB' : 'Not connected to DB');
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.mongoURI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
-
-// MongoDB connection check route
-app.get('/mongodbconnection', async (req, res) => {
-  try {
-    if (mongoose.connection.readyState === 1) {
-      res.send("Connected to DB");
-    } else {
-      res.send("Not connected to DB");
-    }
-  } catch (err) {
-    res.send("Connection to DB failed");
-  }
-});
-
-// Start server
+// ✅ Start server
 if (require.main === module) {
   app.listen(port, () => {
-    console.log(`🚀 Server running on PORT: ${port}`);
+    console.log(`🚀 Server is running on port ${port}`);
   });
 }
 

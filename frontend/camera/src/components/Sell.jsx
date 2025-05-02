@@ -5,29 +5,30 @@ import axios from 'axios';
 
 const Sell = () => {
   const [sellItems, setSellItems] = useState([]);
- 
   const [dropdownOpen, setDropdownOpen] = useState();
+  const [flag, setFlag] = useState(false);
 
-  const [flag,setFlag]=useState(false)
-  
   useEffect(() => {
     fetchSellCameras();
-    dropdownmenu()
+    dropdownmenu();
   }, []);
 
-const dropdownmenu = async(value) =>{
-  const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', { params: { username } });
-  setDropdownOpen(response.data)
-  if(flag){
-      let x=response.data.filter((elem)=>{
-           return elem.created_by==value
-      })
-      setSellItems(x)
-  }
-
-  setFlag(true)
-
-} 
+  const dropdownmenu = async (value) => {
+    try {
+      const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', {
+        params: { username },
+        withCredentials: true // ✅ Axios fix
+      });
+      setDropdownOpen(response.data);
+      if (flag) {
+        let x = response.data.filter((elem) => elem.created_by === value);
+        setSellItems(x);
+      }
+      setFlag(true);
+    } catch (error) {
+      console.error('Error fetching dropdown data:', error);
+    }
+  };
 
   const getUsernameFromCookie = () => {
     const cookies = document.cookie.split(';');
@@ -42,9 +43,12 @@ const dropdownmenu = async(value) =>{
 
   const username = getUsernameFromCookie();
 
-  const fetchSellCameras = async (username) => {
+  const fetchSellCameras = async () => {
     try {
-      const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', { params: { username } });
+      const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', {
+        params: { username },
+        withCredentials: true // ✅ Axios fix
+      });
       if (response.status !== 200) {
         throw new Error('Failed to fetch sell cameras');
       }
@@ -56,7 +60,12 @@ const dropdownmenu = async(value) =>{
 
   const handleRemove = async (cameraId) => {
     try {
-      const response = await axios.delete(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`);
+      const response = await axios.delete(
+        `https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`,
+        {
+          withCredentials: true // ✅ Axios fix
+        }
+      );
       if (response.status === 200) {
         console.log('Camera removed successfully');
         fetchSellCameras();
@@ -70,7 +79,13 @@ const dropdownmenu = async(value) =>{
 
   const handleUpdate = async (cameraId, updatedData) => {
     try {
-      const response = await axios.put(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`, updatedData);
+      const response = await axios.put(
+        `https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`,
+        updatedData,
+        {
+          withCredentials: true // ✅ Axios fix
+        }
+      );
       if (response.status === 200) {
         console.log('Camera updated successfully');
         fetchSellCameras();
@@ -87,7 +102,11 @@ const dropdownmenu = async(value) =>{
   };
 
   const UpdateForm = ({ camera, handleUpdateSubmit }) => {
-    const [updatedData, setUpdatedData] = useState({ name: camera.name, price: camera.price, imgurl: camera.imgurl });
+    const [updatedData, setUpdatedData] = useState({
+      name: camera.name,
+      price: camera.price,
+      imgurl: camera.imgurl
+    });
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -137,14 +156,17 @@ const dropdownmenu = async(value) =>{
             </li>
           </ul>
           <div>
-            <select name="select" id="select" onChange={(e)=>{
-              dropdownmenu(e.target.value)
-            }}>
-             {
-                dropdownOpen && dropdownOpen.map((elem)=>{
-                    return <option>{elem.created_by}</option>
-                })
-             }
+            <select
+              name="select"
+              id="select"
+              onChange={(e) => {
+                dropdownmenu(e.target.value);
+              }}
+            >
+              {dropdownOpen &&
+                dropdownOpen.map((elem, index) => (
+                  <option key={index}>{elem.created_by}</option>
+                ))}
             </select>
           </div>
         </nav>

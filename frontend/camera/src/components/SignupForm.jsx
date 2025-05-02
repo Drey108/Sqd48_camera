@@ -24,7 +24,11 @@ function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://sqd48-camera.onrender.com/users', formData, { withCredentials: true });
+      const response = await axios.post(
+        'https://sqd48-camera.onrender.com/users', 
+        formData, 
+        { withCredentials: true } // ✅ Add Axios fix here
+      );
       console.log(response.data);
       navigate('/login');
       setFormData({
