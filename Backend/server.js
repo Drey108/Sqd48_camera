@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 // Configure CORS
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://camera-frontend.onrender.com'  // ✅ Replace with your actual frontend URL
+  'https://camerafrontend.pages.dev/'  // ✅ Replace with your actual frontend URL
 ];
 
 const corsOptions = {
