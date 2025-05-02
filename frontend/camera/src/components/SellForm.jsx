@@ -30,16 +30,10 @@ const SellForm = () => {
         name: modelName,
         imgurl: imageUrl,
         price: parseFloat(price),
-        created_by: username,
+        created_by:username, // Include username in the form data
       };
 
-      const response = await axios.post(
-        'https://sqd48-camera.onrender.com/sell-cameras',
-        formData,
-        {
-          withCredentials: true // ✅ Axios fix added here
-        }
-      );
+      const response = await axios.post('https://sqd48-camera.onrender.com/sell-cameras', formData);
 
       if (response.status === 200) {
         console.log('Camera added successfully');

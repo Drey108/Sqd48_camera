@@ -22,14 +22,9 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        'https://sqd48-camera.onrender.com/login',
-        formData,
-        {
-          withCredentials: true // ✅ Axios fix added here
-        }
-      );
+      const response = await axios.post('https://sqd48-camera.onrender.com/login', formData);
       console.log(response.data); // Log success message or response data
+      // Redirect to the homepage upon successful login
       document.cookie = `username=${formData.username}`;
       navigate('/');
     } catch (error) {
