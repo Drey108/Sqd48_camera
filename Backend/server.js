@@ -23,6 +23,9 @@ mongoose.connect(process.env.mongoURI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
+// Serve camera data
+
+app.get('/cameras', async (req, res) => {
 app.get('/mongodbconnection', async (req, res) => {
   try {
     if (mongoose.connection.readyState === 1) {
