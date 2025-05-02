@@ -16,7 +16,7 @@ const Sell = () => {
   }, []);
 
 const dropdownmenu = async(value) =>{
-  const response = await axios.get('http://localhost:3001/sell-cameras', { params: { username } });
+  const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', { params: { username } });
   setDropdownOpen(response.data)
   if(flag){
       let x=response.data.filter((elem)=>{
@@ -44,7 +44,7 @@ const dropdownmenu = async(value) =>{
 
   const fetchSellCameras = async (username) => {
     try {
-      const response = await axios.get('http://localhost:3001/sell-cameras', { params: { username } });
+      const response = await axios.get('https://sqd48-camera.onrender.com/sell-cameras', { params: { username } });
       if (response.status !== 200) {
         throw new Error('Failed to fetch sell cameras');
       }
@@ -56,7 +56,7 @@ const dropdownmenu = async(value) =>{
 
   const handleRemove = async (cameraId) => {
     try {
-      const response = await axios.delete(`http://localhost:3001/sell-cameras/${cameraId}`);
+      const response = await axios.delete(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`);
       if (response.status === 200) {
         console.log('Camera removed successfully');
         fetchSellCameras();
@@ -70,7 +70,7 @@ const dropdownmenu = async(value) =>{
 
   const handleUpdate = async (cameraId, updatedData) => {
     try {
-      const response = await axios.put(`http://localhost:3001/sell-cameras/${cameraId}`, updatedData);
+      const response = await axios.put(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`, updatedData);
       if (response.status === 200) {
         console.log('Camera updated successfully');
         fetchSellCameras();

@@ -8,9 +8,20 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
 // Configure CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://camera-frontend.onrender.com'  // ✅ Replace with your actual frontend URL
+];
+
 const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your frontend URL in production
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 };
 
 app.use(express.json());
