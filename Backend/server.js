@@ -7,10 +7,9 @@ const routes = require("./routes");
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
-// Configure CORS
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://camerafrontend.pages.dev/'  // ✅ Replace with your actual frontend URL
+  'https://camerafrontend.pages.dev'
 ];
 
 const corsOptions = {
@@ -27,16 +26,15 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
+
 app.get('/', (req, res) => {
   res.send('Backend is working');
 });
 
-// Connect to MongoDB
 mongoose.connect(process.env.mongoURI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
-// MongoDB connection check route
 app.get('/mongodbconnection', async (req, res) => {
   try {
     if (mongoose.connection.readyState === 1) {
@@ -49,7 +47,8 @@ app.get('/mongodbconnection', async (req, res) => {
   }
 });
 
-// Start server
+app.use("/api", routes);  // ✅ fixed line
+
 if (require.main === module) {
   app.listen(port, () => {
     console.log(`🚀 Server running on PORT: ${port}`);
