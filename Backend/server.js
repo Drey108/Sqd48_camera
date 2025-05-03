@@ -8,16 +8,14 @@ const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3001;
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://sqd48-camera.vercel.app'
-];
-
-// CORS Setup
+// ✅ Allow localhost + all Vercel deployments
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log('Incoming request from origin:', origin); // helpful log
-    if (!origin || allowedOrigins.includes(origin)) {
+    console.log('🌐 Incoming request from:', origin);
+    const isLocal = !origin || origin.includes('localhost');
+    const isVercel = origin && origin.endsWith('.vercel.app');
+
+    if (isLocal || isVercel) {
       callback(null, true);
     } else {
       callback(new Error(`❌ Not allowed by CORS: ${origin}`));
@@ -26,22 +24,22 @@ const corsOptions = {
   credentials: true,
 };
 
-// Middleware
+// 🧩 Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-// Base route
+// 🌐 Health check route
 app.get('/', (req, res) => {
   res.send('✅ Backend is working');
 });
 
-// MongoDB connection
+// 🔗 MongoDB connection
 mongoose.connect(process.env.mongoURI)
   .then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// MongoDB connection test route
+// 🧪 DB test route
 app.get('/mongodbconnection', async (req, res) => {
   if (mongoose.connection.readyState === 1) {
     res.send('✅ Connected to DB');
@@ -50,10 +48,10 @@ app.get('/mongodbconnection', async (req, res) => {
   }
 });
 
-// API routes
+// 📦 API routes
 app.use('/api', routes);
 
-// Start server
+// 🚀 Launch server
 if (require.main === module) {
   app.listen(port, () => {
     console.log(`🚀 Server running on PORT: ${port}`);
