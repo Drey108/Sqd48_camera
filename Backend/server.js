@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://camerafrontend.pages.dev'
+  'https://sqd48-camera.vercel.app'
 ];
 
 const corsOptions = {
