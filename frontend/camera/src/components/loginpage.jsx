@@ -22,7 +22,7 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, formData,{ withCredentials: true });
       console.log(response.data); // Log success message or response data
       // Redirect to the homepage upon successful login
       document.cookie = `username=${formData.username}`;

@@ -56,7 +56,7 @@ const dropdownmenu = async(value) =>{
 
   const handleRemove = async (cameraId) => {
     try {
-      const response = await axios.delete(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`);
+      const response = await axios.delete(`https://sqd48-camera.onrender.com/sell-cameras/${cameraId}`,{ withCredentials: true });
       if (response.status === 200) {
         console.log('Camera removed successfully');
         fetchSellCameras();
@@ -70,7 +70,7 @@ const dropdownmenu = async(value) =>{
 
   const handleUpdate = async (cameraId, updatedData) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/sell-cameras/${cameraId}`, updatedData);
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/sell-cameras/${cameraId}`, updatedData,{ withCredentials: true });
       if (response.status === 200) {
         console.log('Camera updated successfully');
         fetchSellCameras();

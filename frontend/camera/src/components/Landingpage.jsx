@@ -18,7 +18,7 @@ const Landingpage = () => {
 
   const fetchCameras = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/cameras`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/cameras`,{ withCredentials: true });
       if (response.status !== 200) {
         throw new Error('Failed to fetch cameras');
       }
@@ -54,7 +54,7 @@ const Landingpage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/logout`);
+      await axios.post(`${import.meta.env.VITE_API_URL}/logout`,{ withCredentials: true });
       setIsLoggedIn(false);
       document.cookie = 'username=; Max-Age=0; path=/'; // Clear the cookie
     } catch (error) {
