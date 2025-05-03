@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://camerafrontend.pages.dev'
+  'https://4492bd3e.camerafrontend.pages.dev/'
 ];
 
 const corsOptions = {
