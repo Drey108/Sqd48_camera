@@ -18,7 +18,7 @@ const Landingpage = () => {
 
   const fetchCameras = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/cameras`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/datas`);
       if (response.status !== 200) {
         throw new Error('Failed to fetch cameras');
       }
