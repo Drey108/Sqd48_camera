@@ -24,7 +24,7 @@ function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://camerabackend-0sub.onrender.com/users', formData, { withCredentials: true });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, { withCredentials: true });
       console.log(response.data);
       navigate('/login');
       setFormData({

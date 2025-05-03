@@ -33,7 +33,7 @@ const SellForm = () => {
         created_by:username, // Include username in the form data
       };
 
-      const response = await axios.post('https://camerabackend-0sub.onrender.com/sell-cameras', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/sell-cameras`, formData);
 
       if (response.status === 200) {
         console.log('Camera added successfully');

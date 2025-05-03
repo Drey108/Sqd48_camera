@@ -70,7 +70,7 @@ const dropdownmenu = async(value) =>{
 
   const handleUpdate = async (cameraId, updatedData) => {
     try {
-      const response = await axios.put(`https://camerabackend-0sub.onrender.com/sell-cameras/${cameraId}`, updatedData);
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/sell-cameras/${cameraId}`, updatedData);
       if (response.status === 200) {
         console.log('Camera updated successfully');
         fetchSellCameras();
