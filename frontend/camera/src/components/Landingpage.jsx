@@ -54,7 +54,7 @@ const Landingpage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://camerabackend-0sub.onrender.com//logout');
+      await axios.post('https://camerabackend-0sub.onrender.com/logout');
       setIsLoggedIn(false);
       document.cookie = 'username=; Max-Age=0; path=/'; // Clear the cookie
     } catch (error) {
