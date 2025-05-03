@@ -18,7 +18,7 @@ const Landingpage = () => {
 
   const fetchCameras = async () => {
     try {
-      const response = await axios.get('https://sqd48-camera.onrender.com/cameras');
+      const response = await axios.get('https://camerabackend-0sub.onrender.com/');
       if (response.status !== 200) {
         throw new Error('Failed to fetch cameras');
       }
@@ -54,7 +54,7 @@ const Landingpage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://sqd48-camera.onrender.com/logout');
+      await axios.post('https://camerabackend-0sub.onrender.com//logout');
       setIsLoggedIn(false);
       document.cookie = 'username=; Max-Age=0; path=/'; // Clear the cookie
     } catch (error) {
