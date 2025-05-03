@@ -13,9 +13,9 @@ const corsOptions = {
     console.log('🌐 Incoming request from:', origin);
 
     const allowed =
-      !origin || // allow mobile apps, Postman, etc.
-      origin.includes('localhost') || // local dev
-      /^https:\/\/.*\.vercel\.app$/.test(origin); // all Vercel preview or custom domains
+      !origin ||
+      origin.includes('localhost') ||
+      /^https:\/\/.*\.vercel\.app$/.test(origin);
 
     if (allowed) {
       callback(null, true);
