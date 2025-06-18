@@ -5,6 +5,8 @@ const Camera = require('./models/data');
 const SellCamera = require('./models/selldata');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/auth');
+
 
 // Users data requests
 router.get('/users', async (req, res) => {
@@ -71,7 +73,7 @@ router.get('/cameras', async (req, res) => {
   }
 });
 
-router.post('/cameras', async (req, res) => {
+router.post('/cameras', authenticateToken, async (req, res) => {
   try {
     const { name, imgurl, price } = req.body;
     const newCamera = new Camera({ name, imgurl, price });
@@ -94,7 +96,7 @@ router.get('/sell-cameras', async (req, res) => {
   }
 });
 
-router.post('/sell-cameras', async (req, res) => {
+router.post('/sell-cameras', authenticateToken, async (req, res) => {
   try {
     const { name, imgurl, price, created_by } = req.body;
     const newSellCamera = new SellCamera({ name, imgurl, price,created_by });
@@ -106,7 +108,7 @@ router.post('/sell-cameras', async (req, res) => {
   }
 });
 
-router.put('/sell-cameras/:id', async (req, res) => {
+router.put('/sell-cameras/:id', authenticateToken, async (req, res) => {
   try {
     const { name, imgurl, price } = req.body;
     const { id } = req.params;
@@ -118,7 +120,7 @@ router.put('/sell-cameras/:id', async (req, res) => {
   }
 });
 
-router.delete('/sell-cameras/:id', async (req, res) => {
+router.delete('/sell-cameras/:id',authenticateToken, async (req, res) => {
   try {
     const cameraId = req.params.id;
     const deletedCamera = await SellCamera.findByIdAndDelete(cameraId);
